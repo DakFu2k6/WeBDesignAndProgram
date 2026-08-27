@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lab 2: DOM & Events</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <div class="card">
+        <h2>House Price Prediction Form</h2>
+        <form id="houseForm">
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location" placeholder="e.g., District 1" />
+            </div>
+
+            <div class="form-group">
+                <label for="area">Area (sqm)</label>
+                <input type="number" id="area" name="area" placeholder="e.g., 85" />
+            </div>
+
+            <div class="form-group">
+                <label for="bedrooms">Bedrooms</label>
+                <input type="number" id="bedrooms" name="bedrooms" placeholder="e.g., 2" />
+            </div>
+
+            <button type="submit">Predict / Submit</button>
+        </form>
+
+        <div id="messageContainer"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
