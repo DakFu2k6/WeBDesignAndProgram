@@ -22,8 +22,9 @@
         <li><a href="#about">Giới thiệu</a></li>
         <li><a href="#skills">Kỹ năng</a></li>
         <li><a href="#projects">Bảng dự án</a></li>
-        <li><a href="#links">Liên kết & Ảnh</a></li>
-        <li><a href="#contact">Đăng ký & Liên hệ</a></li>
+        <li><a href="#api-users">Thành viên API</a></li>
+        <li><a href="#posts-lab">Bài viết (Lab 2)</a></li>
+        <li><a href="#contact">Dự đoán ML (Lab 3)</a></li>
         <li><a href="#interactive">Tương tác</a></li>
       </ul>
     </nav>
@@ -100,12 +101,44 @@
       </div>
     </section>
 
+    <section id="api-users" class="card-section">
+      <h2>Danh Sách Thành Viên (Dữ Liệu Từ API)</h2>
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Họ Tên</th>
+              <th scope="col">Username</th>
+              <th scope="col">Email</th>
+              <th scope="col">Địa Chỉ</th>
+              <th scope="col">Công Ty</th>
+            </tr>
+          </thead>
+          <tbody id="userTableBody">
+            <tr>
+              <td colspan="6" style="text-align: center;">Đang tải dữ liệu...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="posts-lab" class="card-section">
+      <div class="section-header-action"
+        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <h2>Bài Viết Mới Nhất (Lab 2: Cards Grid)</h2>
+        <button id="btnLoadPosts" class="btn-primary">Tải bài viết</button>
+      </div>
+      <p id="postStatus" style="color: #6b7280; font-style: italic;"></p>
+      <div id="postsContainer"></div>
+    </section>
+
     <section id="contact" class="card-section">
       <h2>Form Đăng Ký Thông Tin & Dự Đoán</h2>
       <p class="section-desc">Điền thông tin bên dưới để gửi dữ liệu xử lý:</p>
 
       <form action="/predict" method="POST" class="entry-form">
-
         <div class="form-group">
           <label for="fullname">Họ và tên <span class="required-star">*</span>:</label>
           <input type="text" id="fullname" name="fullname" placeholder="Nhập họ và tên..." required>
@@ -143,8 +176,9 @@
         <div class="form-group">
           <button type="submit" class="btn-primary">Gửi Thông Tin (Submit)</button>
         </div>
-
       </form>
+
+      <div id="predictionResult" style="display: none;"></div>
     </section>
 
     <section id="links" class="card-section">
