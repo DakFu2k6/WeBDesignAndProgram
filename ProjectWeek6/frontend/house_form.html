@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Price Prediction</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 60px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 6px;
+        }
+
+        input,
+        select {
+            border: 1px solid #ccc;
+        }
+
+        button {
+            border: none;
+            background: #333;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #555;
+        }
+
+        #result {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 8px;
+            background: #f1f1f1;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        #error {
+            margin-top: 15px;
+            color: red;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>House Price Prediction</h1>
+        <form id="houseForm">
+            <div class="form-group">
+                <label for="area">Area (m²)</label>
+                <input type="number" id="area" name="area" min="1" step="0.01" required placeholder="Example: 80">
+            </div>
+            <div class="form-group">
+                <label for="bedrooms">Number of Bedrooms</label>
+                <input type="number" id="bedrooms" name="bedrooms" min="1" step="1" required placeholder="Example: 3">
+            </div>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <select id="location" name="location">
+                    <option value="other">Other</option>
+                    <option value="hanoi">Hanoi</option>
+                    <option value="hcmc">HCMC</option>
+                </select>
+            </div>
+            <button type="submit">
+                Predict Price
+            </button>
+        </form>
+        <div id="result">
+            Enter house information and click "Predict Price".
+        </div>
+        <div id="error"></div>
+    </div>
+    <script>
+        const form = document.getElementById("houseForm");
+        const result = document.getElementById("result");
+        const error = document.getElementById("error");
+        form.addEventListener("submit", async function (event) {
+            event.preventDefault();
+            error.textContent = "";
+            try {
+                const area = document.getElementById("area").value;
+                const bedrooms = document.getElementById("bedrooms").value;
+                const location = document.getElementById("location").value;
+                const url =
+                    `/predict?area=${encodeURIComponent(area)}` +
+                    `&bedrooms=${encodeURIComponent(bedrooms)}` +
+                    `&location=${encodeURIComponent(location)}`;
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(
+                        `Request failed with status ${response.status}`
+                    );
+                }
+                const data = await response.json();
+                const formattedPrice =
+                    Number(data.predicted_price).toLocaleString("en-US");
+                result.textContent =
+                    `Predicted Price: ${formattedPrice} VND`;
+            } catch (err) {
+                result.textContent = "Prediction failed.";
+                error.textContent =
+                    `Error: ${err.message}`;
+            }
+        });
+    </script>
+</body>
+
+</html>
