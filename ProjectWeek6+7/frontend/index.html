@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FastAPI House Price & Items API</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div>
+                <p class="eyebrow">FASTAPI · WEEK 07 EXTENDED LAB</p>
+                <h1>API Control Center</h1>
+                <p class="subtitle">
+                    House Price Prediction & Items Management
+                </p>
+            </div>
+            <div class="api-status">
+                <span class="status-dot"></span>
+                API Online
+            </div>
+        </div>
+    </header>
+    <main class="container">
+        <section class="card">
+            <div class="section-header">
+                <div>
+                    <span class="section-number">01</span>
+                    <div>
+                        <h2>House Price Prediction</h2>
+                        <p> Send house information to the FastAPI prediction endpoint. </p>
+                    </div>
+                </div>
+            </div>
+            <form id="predictionForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="area"> Area <span>m²</span> </label>
+                        <input type="number" id="area" min="0.01" step="0.01" placeholder="Example: 80" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bedrooms"> Bedrooms </label>
+                        <input type="number" id="bedrooms" min="0" step="1" placeholder="Example: 3" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="distance"> Distance to Center <span>km</span> </label>
+                        <input type="number" id="distance" min="0" step="0.1" placeholder="Example: 5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="location"> Location </label>
+                        <select id="location">
+                            <option value="other">Other</option>
+                            <option value="hanoi">Hanoi</option>
+                            <option value="hcmc">HCMC</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="primary-button">
+                    Predict House Price
+                </button>
+            </form>
+            <div id="predictionResult" class="result-box hidden">
+                <p class="result-label"> Predicted Price </p>
+                <p id="predictedPrice" class="price"></p>
+                <p id="predictionDetails" class="result-details"></p>
+            </div>
+            <div id="predictionError" class="error-message"></div>
+        </section>
+        <section class="card">
+            <div class="section-header">
+                <div>
+                    <span class="section-number">02</span>
+                    <div>
+                        <h2>Items Management</h2>
+                        <p> Filtering, searching, sorting and pagination. </p>
+                    </div>
+                </div>
+                <button id="refreshItems" class="secondary-button"> Refresh </button>
+            </div>
+            <div class="filters">
+                <div class="form-group">
+                    <label for="search"> Search</label>
+                    <input type="text" id="search" minlength="2" placeholder="Search item name...">
+                </div>
+                <div class="form-group">
+                    <label for="minPrice"> Min Price </label>
+                    <input type="number" id="minPrice" min="0" placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label for="maxPrice"> Max Price </label>
+                    <input type="number" id="maxPrice" min="0" placeholder="No limit">
+                </div>
+                <div class="form-group">
+                    <label for="sortBy"> Sort By </label>
+                    <select id="sortBy">
+                        <option value="id">ID</option>
+                        <option value="name">Name</option>
+                        <option value="price">Price</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="order"> Order </label>
+                    <select id="order">
+                        <option value="asc">Ascending</option>
+                        <option value="desc">Descending</option>
+                    </select>
+                </div>
+            </div>
+            <button id="applyFilters" class="primary-button small-button"> Apply Filters </button>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="itemsTableBody">
+                    </tbody>
+                </table>
+            </div>
+            <div class="pagination">
+                <button id="previousPage" class="secondary-button"> ← Previous </button>
+                <div class="pagination-info">
+                    <span>
+                        Total:
+                        <strong id="totalItems">0</strong>
+                    </span>
+                    <span>
+                        Page:
+                        <strong id="currentPage">1</strong>
+                    </span>
+                </div>
+                <button id="nextPage" class="secondary-button">
+                    Next →
+                </button>
+            </div>
+            <div id="itemsError" class="error-message">
+            </div>
+        </section>
+        <section class="card concepts-card">
+            <div class="section-header">
+                <div>
+                    <span class="section-number">03</span>
+                    <div>
+                        <h2>Week 07 Concepts</h2>
+                        <p>
+                            Features implemented in this project.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="concept-grid">
+                <div class="concept">
+                    <span>PATCH</span>
+                    <p>
+                        Partial resource updates with
+                        <code>exclude_unset=True</code>.
+                    </p>
+                </div>
+                <div class="concept">
+                    <span>FILTER</span>
+                    <p>
+                        Filter items by minimum and maximum price.
+                    </p>
+                </div>
+                <div class="concept">
+                    <span>SEARCH</span>
+                    <p>
+                        Case-insensitive name search.
+                    </p>
+                </div>
+                <div class="concept">
+                    <span>SORT</span>
+                    <p>
+                        Sort by ID, name or price.
+                    </p>
+                </div>
+                <div class="concept">
+                    <span>409</span>
+                    <p>
+                        Duplicate item names produce Conflict.
+                    </p>
+                </div>
+                <div class="concept">
+                    <span>422</span>
+                    <p>
+                        Pydantic validates request data automatically.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>
+            FastAPI Extended Lab · Week 07
+        </p>
+    </footer>
+    <script src="/static/script.js"></script>
+</body>
+
+</html>
