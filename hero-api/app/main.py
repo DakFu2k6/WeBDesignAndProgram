@@ -5,6 +5,7 @@ from app import models
 from app.database import SessionDep, engine
 from sqlalchemy.exc import IntegrityError
 from app.models import (Hero, HeroCreate, HeroPublic, HeroUpdate, Mission, MissionCreate, MissionPublic, Team, TeamCreate, TeamPublic,)
+from fastapi.middleware.cors import CORSMiddleware
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -12,6 +13,14 @@ async def lifespan(app: FastAPI):
     yield
 
 app = FastAPI(title="Hero API", lifespan=lifespan,)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.post("/heroes", response_model=HeroPublic, status_code=201,)
 def create_hero(hero_in: HeroCreate, session: SessionDep,):

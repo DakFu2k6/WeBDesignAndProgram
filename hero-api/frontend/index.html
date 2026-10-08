@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero API Dashboard</title>
+    <meta name="description" content="Professional dashboard for managing heroes and teams.">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">⚡</div>
+                <div>
+                    <h1>Hero API</h1>
+                    <span>Management System</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item active">
+                    <span class="nav-icon">▦</span>
+                    Dashboard
+                </a>
+                <a href="#heroes" class="nav-item">
+                    <span class="nav-icon">♙</span>
+                    Heroes
+                </a>
+                <a href="#teams" class="nav-item">
+                    <span class="nav-icon">♟</span>
+                    Teams
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="api-status">
+                    <span class="status-dot"></span>
+                    <div>
+                        <strong>API Online</strong>
+                        <small>127.0.0.1:8000</small>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <main class="main-content">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">HERO MANAGEMENT</p>
+                    <h2 id="page-title">Dashboard</h2>
+                </div>
+                <div class="topbar-actions">
+                    <button id="refresh-btn" class="btn btn-secondary" type="button">
+                        ↻ Refresh
+                    </button>
+                </div>
+            </header>
+            <section id="dashboard" class="page-section">
+                <div class="section-heading">
+                    <div>
+                        <h3>Overview</h3>
+                        <p>Monitor your heroes and teams.</p>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <article class="stat-card">
+                        <div class="stat-icon purple">♙</div>
+                        <div>
+                            <span>Total Heroes</span>
+                            <strong id="total-heroes">0</strong>
+                        </div>
+                    </article>
+                    <article class="stat-card">
+                        <div class="stat-icon blue">♟</div>
+                        <div>
+                            <span>Total Teams</span>
+                            <strong id="total-teams">0</strong>
+                        </div>
+                    </article>
+                    <article class="stat-card">
+                        <div class="stat-icon green">✓</div>
+                        <div>
+                            <span>API Status</span>
+                            <strong id="api-status-text">Online</strong>
+                        </div>
+                    </article>
+                </div>
+                <div class="content-grid">
+                    <section class="panel">
+                        <div class="panel-header">
+                            <div>
+                                <h3>Quick Actions</h3>
+                                <p>Create and manage your resources.</p>
+                            </div>
+                        </div>
+                        <div class="quick-actions">
+                            <button class="action-card" type="button" data-modal="hero-modal">
+                                <span class="action-icon">♙</span>
+                                <div>
+                                    <strong>Add Hero</strong>
+                                    <span>Create a new hero</span>
+                                </div>
+                                <span class="arrow">→</span>
+                            </button>
+                            <button class="action-card" type="button" data-modal="team-modal">
+                                <span class="action-icon">♟</span>
+                                <div>
+                                    <strong>Add Team</strong>
+                                    <span>Create a new team</span>
+                                </div>
+                                <span class="arrow">→</span>
+                            </button>
+                        </div>
+                    </section>
+                    <section class="panel">
+                        <div class="panel-header">
+                            <div>
+                                <h3>Recent Heroes</h3>
+                                <p>Latest heroes added to the system.</p>
+                            </div>
+                            <a href="#heroes" class="text-link">
+                                View all →
+                            </a>
+                        </div>
+                        <div id="recent-heroes" class="recent-list">
+                            <div class="empty-state small">
+                                Loading...
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+            <section id="heroes" class="page-section">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">MANAGEMENT</p>
+                        <h3>Heroes</h3>
+                        <p>Manage all heroes in your organization.</p>
+                    </div>
+                    <button class="btn btn-primary" type="button" data-modal="hero-modal">
+                        + Add Hero
+                    </button>
+                </div>
+                <section class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Search & Filter</h3>
+                            <p>Find heroes using the available filters.</p>
+                        </div>
+                    </div>
+                    <form id="hero-filter-form" class="filter-form">
+                        <div class="form-group">
+                            <label for="hero-name">
+                                Hero name
+                            </label>
+                            <input id="hero-name" name="name" type="text" placeholder="Search by name...">
+                        </div>
+                        <div class="form-group">
+                            <label for="min-age">
+                                Minimum age
+                            </label>
+                            <input id="min-age" name="min_age" type="number" min="0" placeholder="e.g. 18">
+                        </div>
+                        <div class="form-group">
+                            <label for="team-filter">
+                                Team
+                            </label>
+                            <select id="team-filter" name="team_id">
+                                <option value="">All teams</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary filter-button" type="submit">
+                            Search
+                        </button>
+                    </form>
+                </section>
+                <section class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Hero List</h3>
+                            <p id="hero-result-count">
+                                Loading heroes...
+                            </p>
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Age</th>
+                                    <th>Team</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="heroes-table-body">
+                                <tr>
+                                    <td colspan="5">
+                                        <div class="table-loading">
+                                            Loading heroes...
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination">
+                        <button id="prev-page" class="btn btn-secondary" type="button">
+                            ← Previous
+                        </button>
+                        <span id="page-info">
+                            Page 1
+                        </span>
+                        <button id="next-page" class="btn btn-secondary" type="button">
+                            Next →
+                        </button>
+                    </div>
+                </section>
+            </section>
+            <section id="teams" class="page-section">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">MANAGEMENT</p>
+                        <h3>Teams</h3>
+                        <p>Manage teams and their members.</p>
+                    </div>
+
+                    <button class="btn btn-primary" type="button" data-modal="team-modal">
+                        + Add Team
+                    </button>
+                </div>
+                <div id="teams-grid" class="teams-grid">
+                    <div class="empty-state">
+                        Loading teams...
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <div id="hero-modal" class="modal" aria-hidden="true">
+        <div class="modal-overlay" data-close-modal></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <p class="eyebrow">NEW RESOURCE</p>
+                    <h3>Create Hero</h3>
+                </div>
+                <button class="modal-close" type="button" data-close-modal>
+                    ×
+                </button>
+            </div>
+            <form id="hero-form">
+                <div class="form-group">
+                    <label for="hero-form-name">
+                        Name
+                    </label>
+                    <input id="hero-form-name" name="name" type="text" required placeholder="Tony Stark">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="hero-form-age">
+                            Age
+                        </label>
+                        <input id="hero-form-age" name="age" type="number" min="0" required placeholder="35">
+                    </div>
+                    <div class="form-group">
+                        <label for="hero-form-secret">
+                            Secret name
+                        </label>
+                        <input id="hero-form-secret" name="secret_name" type="text" required placeholder="Iron Man">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="hero-form-team">
+                        Team
+                    </label>
+                    <select id="hero-form-team" name="team_id">
+                        <option value="">
+                            No team
+                        </option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" type="button" data-close-modal>
+                        Cancel
+                    </button>
+                    <button class="btn btn-primary" type="submit">
+                        Create Hero
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="team-modal" class="modal" aria-hidden="true">
+        <div class="modal-overlay" data-close-modal></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <p class="eyebrow">NEW RESOURCE</p>
+                    <h3>Create Team</h3>
+                </div>
+                <button class="modal-close" type="button" data-close-modal>
+                    ×
+                </button>
+            </div>
+            <form id="team-form">
+                <div class="form-group">
+                    <label for="team-form-name">
+                        Team name
+                    </label>
+                    <input id="team-form-name" name="name" type="text" required placeholder="Avengers">
+                </div>
+                <div class="form-group">
+                    <label for="team-form-headquarters">
+                        Headquarters
+                    </label>
+                    <input id="team-form-headquarters" name="headquarters" type="text" required placeholder="New York">
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" type="button" data-close-modal>
+                        Cancel
+                    </button>
+                    <button class="btn btn-primary" type="submit">
+                        Create Team
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="toast" class="toast" role="alert" aria-live="polite">
+        <span id="toast-icon">✓</span>
+        <span id="toast-message">Success</span>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>
