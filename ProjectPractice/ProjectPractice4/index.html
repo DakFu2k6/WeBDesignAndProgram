@@ -55,6 +55,17 @@
     <input type="number" id="myNum">
     <button type="submit" id="Submit3">Submit</button>
     <p id="correctNum"></p>
+    <hr>
+    <form>
+        <h1>Temperature Conversion</h1>
+        <input type="number" id="textTemp" value="0"><br>
+        <input type="radio" id="toFa" name="unit">
+        <label for="toFa">Celisus -> Fahrenheit</label><br>
+        <input type="radio" id="toCe" name="unit">
+        <label for="toCe">Fahrenheit -> Celisus</label><br>
+        <button type="button" onclick="convert()">Submit</button>
+        <p id="coResult"></p>
+    </form>
     <script src="index.js"></script>
 </body>
 

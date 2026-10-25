@@ -165,3 +165,60 @@ Submit3.onclick = function () {
         }
         myGuess.focus();
 }
+
+function happyBirthday() {
+        console.log("Happy birthday to you!")
+        console.log(`Happy birthday dear ${username}`)
+}
+
+happyBirthday();
+
+function add(x, y) {
+        return x + y;
+}
+
+function subtract(x, y) {
+        return x - y;
+}
+
+function multiply(x, y) {
+        return x * y
+}
+
+function divide(x, y) {
+        return x / y;
+}
+
+function isEven(x) {
+        return x % 2 === 0 ? true : false;
+}
+
+function isEmail(email) {
+        return email.includes("@") ? true : false;
+}
+
+console.log(isEven(2));
+console.log(isEmail("Duoc@gami.com"));
+console.log(isEmail("Duocgmail.com"));
+
+const textTemp = document.getElementById("textTemp");
+const toFa = document.getElementById("toFa");
+const toCe = document.getElementById("toCe");
+const coResult = document.getElementById("coResult");
+let temp;
+
+function convert() {
+        if (toFa.checked) {
+                temp = Number(textTemp.value);
+                temp = temp * 9 / 5 + 32;
+                coResult.textContent = temp.toFixed(1) + "°F";
+        }
+        else if (toCe.checked) {
+                temp = Number(textTemp.value);
+                temp = (temp - 32) * (5 / 9);
+                coResult.textContent = temp.toFixed(1) + "°F"
+        }
+        else {
+                coResult.textContent = "Select a unit";
+        }
+}
