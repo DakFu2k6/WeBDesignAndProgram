@@ -477,3 +477,74 @@ console.log(person.firstName);
 console.log(person.lastName);
 console.log(person.age);
 console.log(person.fullName);
+
+let left = 1;
+let right = 2;
+[left, right] = [right, left];
+console.log(`Left: ${left}, Right: ${right}`);
+
+const colors = ["red", "green", "blue", "black", "white"];
+[colors[0], colors[4]] = [colors[4], colors[0]];
+console.log(colors);
+
+const person3 = {
+        fullName: "Dak Fu",
+        age: 20,
+        isStudent: true,
+        hobbies: ["karate", "cooking", "gaming"],
+        address: {
+                street: "04 Tu Street",
+                city: "Bac Ninh",
+                country: "Viet Nam"
+        }
+}
+console.log(person3.fullName);
+console.log(person3.address.city);
+console.log(person3.hobbies[2]);
+
+{
+        class Person {
+                constructor(name, age, ...address) {
+                        this.name = name;
+                        this.age = age;
+                        this.address = new Address(...address);
+                }
+        }
+        class Address {
+                constructor(street, city, country) {
+                        this.street = street;
+                        this.city = city;
+                        this.country = country;
+                }
+        }
+
+        const Person1 = new Person("Kiss", 22, "An Giai Street", "Tu Son City", "Viet Nam");
+        console.log(Person1.name);
+}
+
+const fruits = [{ name: "Apple", color: "red", calories: 95 },
+{ name: "Orange", color: "orange", calories: 45 },
+{ name: "Banana", color: "yellow", calories: 105 },
+{ name: "Coconut", color: "white", calories: 159 },
+{ name: "pineapple", color: "yellow", calories: 37 },
+];
+
+fruits.forEach(fruit => console.log(fruit.name));
+const yellowFruits = fruits.filter(fruit => fruit.color == "yellow");
+console.log(yellowFruits);
+
+// calculato program
+const display = document.getElementById("display");
+function appendToDisplay(input) {
+        display.value += input;
+}
+function clearDisplay() {
+        display.value = "";
+}
+function calculate() {
+        try {
+                display.value = eval(display.value);
+        } catch (error) {
+                display.value = "Error";
+        }
+}

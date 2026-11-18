@@ -54,3 +54,19 @@ button:hover {
 .btn:hover {
     background-color: bisque;
 }
+
+#keys {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+#calculator {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: rgb(15, 16, 16);
+    border-radius: 20px;
+}
+
+#display {
+    width: 100%;
+}
